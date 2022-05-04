@@ -23,7 +23,7 @@ public class CodiceFiscale {
 		 if (codiceFiscale.length() < 16) {
 			 System.out.println(MESS_CODICE_ERRATO);
 		 }
-		 if (.verificaStringa(codiceFiscale, inizio, fine)) {
+		 if (verificaStringa(codiceFiscale, inizio, fine)) {
 			 System.out.println(MESS_CODICE_ERRATO);
 		 }
 	}
