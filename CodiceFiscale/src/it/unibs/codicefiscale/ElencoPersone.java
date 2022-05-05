@@ -25,8 +25,9 @@ public class ElencoPersone {
 		Persona _persona = new Persona();
 		for (int i = 0; i < vettorePersone.size(); i ++) {
 			_persona = vettorePersone.get(i);
+			_persona.setCodiceComune(dialogo.getCodiceComune(_persona.getNomeComune()));
 			CodiceFiscale codice = new CodiceFiscale(_persona.getNomeCodice(), _persona.getCognomeCodice(), 
-					_persona.getAnnoCodice(), _persona.getSessoCodice(), _persona.getCodiceComune());
+					_persona.getAnnoCodice(), _persona.getCodiceComune(), _persona.getSessoCodice());
 			_persona.setCodice(codice);
 		}
 	}

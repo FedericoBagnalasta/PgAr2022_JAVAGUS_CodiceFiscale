@@ -4,8 +4,11 @@ public class Persona {
 	
 	private int eta;
 	private int luogo;
-	private CodiceFiscale cf = new CodiceFiscale(null);
 	private boolean presenzaCodice = true;
+	private String codiceComune;
+	private CodiceFiscale cf = new CodiceFiscale(null);
+	private Data dataNascita = new Data();
+
 	
 	public Persona() {
 		
@@ -30,12 +33,11 @@ public class Persona {
 		return null;
 	}
 
-	public char getAnnoCodice() {
-		// TODO Auto-generated method stub
-		return 0;
+	public String getAnnoCodice() {
+		return dataNascita.dataCodice();
 	}
 
-	public int getSessoCodice() {
+	public char getSessoCodice() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -46,6 +48,16 @@ public class Persona {
 	}
 
 	public void presenzaCodice(boolean f) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getNomeComune() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setCodiceComune(Object codiceComune) {
 		// TODO Auto-generated method stub
 		
 	}

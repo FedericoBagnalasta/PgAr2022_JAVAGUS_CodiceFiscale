@@ -1,19 +1,15 @@
 package it.unibs.codicefiscale;
-
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CodiceFiscale {
 	public static final String MESS_CODICE_ERRATO = "Il codice fiscale inserito non e' corretto";
-	ArrayList<String> vettoreValoriSX = new ArrayList<>();
 	private String codiceFiscale;
 	private String codiceIncompleto;
-	private String nomeCodice;
-	private String cognomeCodice;
+
 	
 	//costruttore per creare un nuovo codice
-	public CodiceFiscale (String nome,  String cognome, char sesso, int data, String comune){
-		this.codiceIncompleto = cognome + nome + data + comune;///data?
+	public CodiceFiscale (String nome,  String cognome,  String data, String comune, char sesso){
+		this.codiceIncompleto = cognome + nome + data + comune;
 		this.codiceFiscale = codiceIncompleto + carattereControllo(codiceIncompleto);
 		
 	}
@@ -22,7 +18,7 @@ public class CodiceFiscale {
 	public CodiceFiscale (String codiceFiscale){
 		this.codiceFiscale = codiceFiscale;
 		codiceIncompleto = codiceFiscale.substring(0, 15);
-		}
+	}
 
 
 	
@@ -67,8 +63,8 @@ public class CodiceFiscale {
 
 //+++++++++++++++++++++++++++++++metodi di supporto al metodo controllo++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
-	 //verifica se la stringa passata sia formata solo da lettere maiuscole
-	 private boolean verificaStringaLettere (int inizio, int fine) {
+	//verifica se la stringa passata sia formata solo da lettere maiuscole
+	private boolean verificaStringaLettere (int inizio, int fine) {
 		String stringaAppoggio= codiceFiscale.substring(inizio, fine);
 		boolean verificato = true;
 	    int ascii;
@@ -83,8 +79,8 @@ public class CodiceFiscale {
 	    }
 	    return verificato;
 	}
-	
-	 //verifica che il carattere all'indice posLettera sia effettivamente un numero
+	 
+	//verifica che il carattere all'indice posLettera sia effettivamente un numero
 	private boolean verificaStringaNumero (int posLettera) {
 		int ascii = (int)codiceFiscale.charAt(posLettera);
 		if (posLettera == 9) {
@@ -103,9 +99,9 @@ public class CodiceFiscale {
 	
 	//verifica che la lettera inposizione 9 sia quella di un mese 
 	private boolean verificaLetteraMese() {
-		String stringaCaratteri = "ABCDEHLMPRST";
-		char  mesi[] = stringaCaratteri.toCharArray();
-		for (int i = 0; i < stringaCaratteri.length(); i++) {
+		String stringaCaratteriMesi = "ABCDEHLMPRST";
+		char  mesi[] = stringaCaratteriMesi.toCharArray();
+		for (int i = 0; i < stringaCaratteriMesi.length(); i++) {
 		     if (codiceFiscale.charAt(8) == mesi[i]) {
 			     return true;
 		     }
@@ -133,7 +129,8 @@ public class CodiceFiscale {
 		return com.valoreCarattereControllo(resto);
 		
 	}
-	//++++++++++++++++++++++++++fine metodi di supporto al metodo controllo++++++++++++++++++++++++++++++++++++++++++++++++
+
+//++++++++++++++++++++++++++fine metodi di supporto al metodo controllo++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	 
 }

@@ -34,4 +34,9 @@ public class XML {
 		return 0;
 	}
 
+	public Object getCodiceComune(Object nomeComune) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
