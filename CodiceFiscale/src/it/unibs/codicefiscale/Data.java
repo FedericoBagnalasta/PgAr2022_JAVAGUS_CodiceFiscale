@@ -19,13 +19,20 @@ public class Data {
 		String stringaCaratteriMesi = "ABCDEHLMPRST";
 		char  mesi[] = stringaCaratteriMesi.toCharArray();
 		int annoTagliato = anno % 100;
-		String dataCodice = "" + annoTagliato + mesi[mese];	
+		if (annoTagliato < 10) {
+		String dataCodice = "" + "0" + annoTagliato + mesi[mese-1];	
 		return dataCodice;
+		}
+		else {
+			String dataCodice = "" + annoTagliato + mesi[mese-1];	
+			return dataCodice;
+		}
 		
 	}
 	
 	public String stampaData() { 
-		String h = "" + anno + "-" ;
+		String h = "" ;
+		if (anno < 10) h += "0" + anno + "-";
 		if (mese < 10) h += "0" + mese + "-";
 		else h += mese + "-";
 		if (giorno < 10) h += "0" + giorno;

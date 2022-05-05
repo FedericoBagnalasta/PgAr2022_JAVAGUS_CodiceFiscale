@@ -28,9 +28,10 @@ public class ElencoPersone {
 		for (int i = 0; i < vettorePersone.size(); i ++) {
 			_persona = vettorePersone.get(i);
 			_persona.setCodiceComune(dialogo.getCodiceComune(_persona.getNomeComune()));
-			CodiceFiscale codice = new CodiceFiscale(_persona.getNomeCodice(), _persona.getCognomeCodice(), 
-					_persona.getAnnoCodice(), _persona.getCodiceComune(), _persona.getSessoCodice());
+			CodiceFiscale codice = new CodiceFiscale(_persona.getNomePerCodice(), _persona.getCognomePerCodice(), 
+					_persona.getAnnoPerCodice(), _persona.getGiornoPerCodice(), _persona.getCodiceComune(), _persona.getSessoPerCodice());
 			_persona.setCodice(codice);
+			System.out.println(codice.stampaCodiceFiscale());
 		}
 	}
 	
@@ -43,6 +44,7 @@ public class ElencoPersone {
 			for (int j = 0; j < vettoreCodici.size(); j++) {
 				if (vettorePersone.get(i).getCodice().equals(vettoreCodici.get(j))) {
 					vettoreCodici.remove(j);
+					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 				}
 				else 
 					vettorePersone.get(i).presenzaCodice(false);

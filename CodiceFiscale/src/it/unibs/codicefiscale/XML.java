@@ -21,7 +21,11 @@ public class XML {
 	private String tag_sesso = "sesso";
 	private String tag_comune = "comune_nascita";
 	private String tag_data = "data_nascita";
-	private final static String filename = "inputPersone.xml";
+	private String tag_codice_fiscale = "codice";
+	private String tag_nome_comune = "nome";
+	private String tag_codice_comune = "codice";
+	private final static String filenamePersone = "inputPersone.xml";
+	private final static String filenameCodici = "codiciFiscali.xml";
 	private static String fileValoreCaratteri = "";
 	
 	XMLInputFactory xmlif;
@@ -34,7 +38,40 @@ public class XML {
 //---------------------------------------------metodi che recuperano i valori dai file------------------------------------	
 	
 	//metodo che legge dal file xml i codici e li mette in una lista
-	public void recuperaCodici(ArrayList<CodiceFiscale> vettoreCodici) {
+	public void recuperaCodici(ArrayList<CodiceFiscale> vettoreCodici) throws XMLStreamException {
+		
+		{
+			try {
+		xmlif = XMLInputFactory.newInstance();
+		xmlr = xmlif.createXMLStreamReader(filenameCodici , new FileInputStream(filenameCodici));
+		} catch (Exception e) {
+		System.out.println("Errore nell'inizializzazione del reader:");
+		System.out.println(e.getMessage());}
+		}
+		
+		while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+			
+			switch (xmlr.getEventType()) { // switch sul tipo di evento
+			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
+				System.out.println("Start Read Doc " + filenameCodici); 
+				break;
+			
+			case XMLStreamConstants.START_ELEMENT: // inizio di un elemento: stampa il nome del tag e i suoi attributi
+			     if (xmlr.getLocalName().equals(tag_codice_fiscale));
+			    	 //System.out.println("open-Tag " + xmlr.getLocalName());
+				break;
+			
+			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+				if (xmlr.getText().trim().length() > 0)  {
+				CodiceFiscale c = new CodiceFiscale(xmlr.getText());
+				vettoreCodici.add(c);
+				}
+				break;	
+				//System.out.println("-> " + xmlr.getText());
+				
+			}
+			xmlr.next();
+		}
 	}
 
 	//metodo che legge dal file xml le persone e le inserisce nell'arrey
@@ -43,7 +80,7 @@ public class XML {
 		{
 			try {
 		xmlif = XMLInputFactory.newInstance();
-		xmlr = xmlif.createXMLStreamReader(filename , new FileInputStream(filename));
+		xmlr = xmlif.createXMLStreamReader(filenamePersone , new FileInputStream(filenamePersone));
 		} catch (Exception e) {
 		System.out.println("Errore nell'inizializzazione del reader:");
 		System.out.println(e.getMessage());}
@@ -57,7 +94,7 @@ public class XML {
 			
 			switch (xmlr.getEventType()) { // switch sul tipo di evento
 			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
-				System.out.println("Start Read Doc " + filename); 
+				System.out.println("Start Read Doc " + filenamePersone); 
 				break;
 			
 			case XMLStreamConstants.START_ELEMENT: // inizio di un elemento: stampa il nome del tag e i suoi attributi
@@ -76,25 +113,21 @@ public class XML {
 			     else if (xmlr.getLocalName().equals(tag_comune)) {
 			    	 next = tag_comune;
 				     }
-			     System.out.println("open-Tag " + xmlr.getLocalName());
+			     //System.out.println("open-Tag " + xmlr.getLocalName());
 			
 			case XMLStreamConstants.END_ELEMENT: // fine di un elemento: stampa il nome del tag chiuso
 				 if (xmlr.getLocalName().equals(tag_persona) && p.presenzaPersona()) {
 					 vettorePersone.add(p);
 					 p = new Persona();
 			     } 
-				System.out.println("END-Tag " + xmlr.getLocalName()); 
+				//System.out.println("END-Tag " + xmlr.getLocalName()); 
 				break;
-			
-			case XMLStreamConstants.COMMENT:
-				 System.out.println("// commento " + xmlr.getText()); 
-				 break; // commento: ne stampa il contenuto
 			
 			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
 				if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
 					
 					if (next.equals(tag_nome))
-						p.setNome(xmlr.getText()); 
+						p.setNomePersona(xmlr.getText()); 
 					else if (next.equals(tag_cognome))
 						p.setCognome(xmlr.getText());
 					else if (next.equals(tag_sesso))
@@ -105,7 +138,7 @@ public class XML {
 						p.setData(xmlr.getText());
 					
 					
-				System.out.println("-> " + xmlr.getText());
+				//System.out.println("-> " + xmlr.getText());
 				
 				}
 			break;
@@ -255,21 +288,61 @@ public class XML {
 			}
 		return next;
 	}
-
-	public char valoreCarattereControllo(int resto) {
-		// TODO Auto-generated method stub
-		return 's';
-	}
 	
 	
 //----------------------------------------------------fine metodi carattere controllo--------------------------------------
 
 //----------------------------------------------------metodi di stampa------------------------------------------------------
-	public Object getCodiceComune(Object nomeComune) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	//metodo che restituisce il codice di un comune, partendo dal nome del comune stesso
+	public String getCodiceComune(String nomeComune) throws XMLStreamException {
+
+		{
+			try {
+				xmlif = XMLInputFactory.newInstance();
+				xmlr = xmlif.createXMLStreamReader("comuni.xml" , new FileInputStream("comuni.xml"));
+				} catch (Exception e) {
+				System.out.println("Errore nell'inizializzazione del reader:");
+				System.out.println(e.getMessage());}
+				}
+			
+			 boolean giusto = false;boolean nome = false;	
+			while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+							
+				switch (xmlr.getEventType()) { // switch sul tipo di evento
+				case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
+					System.out.println("Start Read Doc " + "comuni.xml"); 
+					break;
+				
+				case XMLStreamConstants.START_ELEMENT: // inizio di un elemento: stampa il nome del tag e i suoi attributi
+				     if (xmlr.getLocalName().equals(tag_nome_comune)) {
+				    	 nome = true;
+				    	
+				    	 }
+				     if (nome ) {
+				    	 
+				     }
+				     break;
+				     
+				case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+					if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
+						if (nome && xmlr.getText().equals(nomeComune)) {
+							 System.out.println("trovato");
+							giusto = true;
+						}
+						else if (giusto) {
+							return xmlr.getText();
+						}
+					}
+				break;
+				}
+				xmlr.next();
+				}
+			return nomeComune;
+		
 	}
 
+	
 	public void stampaPersona(ArrayList<Persona> vettorePersone) {
 		int dimensione = vettorePersone.size();
 		for(int i = 0; i < vettorePersone.size(); i++ ) {
