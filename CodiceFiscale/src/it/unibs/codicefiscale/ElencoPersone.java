@@ -2,6 +2,8 @@ package it.unibs.codicefiscale;
 
 import java.util.ArrayList;
 
+import javax.xml.stream.XMLStreamException;
+
 public class ElencoPersone {
 	
 	ArrayList<CodiceFiscale> vettoreCodici = new ArrayList<>();
@@ -10,10 +12,10 @@ public class ElencoPersone {
 	ArrayList<String> vettoreComuni = new ArrayList<>();
 	
 	//nuovo oggetto della classe XML
-	XML dialogo = new XML();
+	private XML dialogo = new XML();
 	
 	//costruttore
-	public ElencoPersone(){
+	public ElencoPersone() throws XMLStreamException{
 		//invocazione dei metodi sull'oggetto dialogo, in modo da recuperare i dati utili
 		dialogo.recuperaCodici(vettoreCodici);
 		dialogo.recuperaPersone(vettorePersone);
@@ -21,7 +23,7 @@ public class ElencoPersone {
 	}
 	
 	//metodo che crea i rispettivi codici di ogni persona
-	public void creaCodici() {
+	public void creaCodici() throws XMLStreamException {
 		Persona _persona = new Persona();
 		for (int i = 0; i < vettorePersone.size(); i ++) {
 			_persona = vettorePersone.get(i);
@@ -50,7 +52,7 @@ public class ElencoPersone {
 	}
 	
 	//metodo che verifica se tra i codici c'è ne sono invalidi, e li mette in una lista
-	public void validitaCodici() {
+	public void validitaCodici() throws XMLStreamException {
 		for (int i = 0; i < vettoreCodici.size(); i++) {
 			CodiceFiscale verifica = vettoreCodici.get(i);
 			if (!verifica.controlloCodice()) {
@@ -64,6 +66,8 @@ public class ElencoPersone {
 	
 	public void stampaOutput() {
 		
+			dialogo.stampaPersona(vettorePersone);
+				
 	
 	}
 	
