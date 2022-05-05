@@ -11,7 +11,13 @@ public class Persona {
 
 	
 	public Persona() {
-		
+		/*
+		 * leggi nome, cognome, eta, sesso
+		 * crea codice nome, cognome, eta, sesso 
+		 * crea codice fiscal
+		 * 
+		 * 
+		 */
 	}
 	
 	public CodiceFiscale getCodice() {
