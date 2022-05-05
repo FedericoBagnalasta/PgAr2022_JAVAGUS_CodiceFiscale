@@ -7,9 +7,7 @@ public class Main {
 	public static void main(String[] args) throws XMLStreamException {
 		
 		ElencoPersone persone = new ElencoPersone();
-		XML file = new XML();
-		
-		CodiceFiscale cf = new CodiceFiscale("PSNLRI99D64C800P");
+		CodiceFiscale cf = new CodiceFiscale("PSNLRI99D64C800M");
 		
 		//persone.creaCodici();
 		

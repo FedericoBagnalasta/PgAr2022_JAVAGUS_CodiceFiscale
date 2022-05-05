@@ -1,6 +1,4 @@
 package it.unibs.codicefiscale;
-import java.util.Iterator;
-
 import javax.xml.stream.XMLStreamException;
 
 public class CodiceFiscale {
