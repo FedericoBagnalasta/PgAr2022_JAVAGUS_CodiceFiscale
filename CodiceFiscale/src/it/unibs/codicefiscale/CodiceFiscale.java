@@ -1,6 +1,8 @@
 package it.unibs.codicefiscale;
 import java.util.Iterator;
 
+import javax.xml.stream.XMLStreamException;
+
 public class CodiceFiscale {
 	public static final String MESS_CODICE_ERRATO = "Il codice fiscale inserito non e' corretto";
 	private String codiceFiscale;
@@ -8,7 +10,7 @@ public class CodiceFiscale {
 
 	
 	//costruttore per creare un nuovo codice
-	public CodiceFiscale (String nome,  String cognome,  String data, String comune, char sesso){
+	public CodiceFiscale (String nome,  String cognome,  String data, String comune, char sesso) throws XMLStreamException{
 		this.codiceIncompleto = cognome + nome + data + comune;
 		this.codiceFiscale = codiceIncompleto + carattereControllo(codiceIncompleto);
 		
@@ -17,7 +19,9 @@ public class CodiceFiscale {
 	//costruttore che crea un oggetto codice partendo da una stringa
 	public CodiceFiscale (String codiceFiscale){
 		this.codiceFiscale = codiceFiscale;
-		codiceIncompleto = codiceFiscale.substring(0, 15);
+		if (codiceFiscale != null)
+			codiceIncompleto = codiceFiscale.substring(0, 15);
+
 	}
 
 
@@ -26,7 +30,7 @@ public class CodiceFiscale {
 	
 	//metodo che controlla un oggetto CodiceFiscale, e retituisce 
 	//vero in caso il codice rispetti tutte le condizioni di un codice fiscale, falso in caso contrario
-	 public boolean controlloCodice () {
+	 public boolean controlloCodice () throws XMLStreamException {
 		 
 		 if (codiceFiscale.length() < 16) {
 			 System.out.println(MESS_CODICE_ERRATO);
@@ -49,7 +53,7 @@ public class CodiceFiscale {
 			 return false;
 		 }
 		 
-		 if (!verificaComune()) {///da fare
+		 if (verificaComune()) {///da fare
 			 System.out.println(MESS_CODICE_ERRATO);
 			 return false;
 		 }
@@ -115,18 +119,20 @@ public class CodiceFiscale {
 	}
 	 
 	//metodo che calcola il valore del carattere di controllo
-	private char carattereControllo(String codiceAttuale) {
+	private char carattereControllo(String codiceAttuale) throws XMLStreamException {
 		XML com = new XML();
+		char []lettere =  {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K','L', 
+				'M', 'N', 'O', 'P',	'Q', 'R', 'S', 'T', 'U', 'V', 'W' , 'X', 'Y','Z'};
 		int resto;int sommaValoriPari = 0; int sommaValoriDispari = 0;
 
 		for (int i = 0; i < 15; i+=2) {
-			sommaValoriPari += com.valoreNumeroPari(codiceAttuale.charAt(i));
+			sommaValoriPari += com.valoreNumeroDispari(codiceAttuale.charAt(i));
 			if (!(i==14))
-				sommaValoriDispari += com.valoreNumeroDisari(codiceAttuale.charAt(i+1));
+				sommaValoriDispari += com.valoreNumeroPari(codiceAttuale.charAt(i+1));
 		}
 		resto = (sommaValoriPari + sommaValoriDispari) % 26;
 		
-		return com.valoreCarattereControllo(resto);
+		return lettere[resto];
 		
 	}
 
