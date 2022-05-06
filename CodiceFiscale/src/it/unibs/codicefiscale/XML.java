@@ -133,11 +133,7 @@ public class XML {
 					else if (next.equals(tag_comune))
 						p.setNomeComune(xmlr.getText());
 					else if (next.equals(tag_data))
-						p.setData(xmlr.getText());
-					
-					
-				//System.out.println("-> " + xmlr.getText());
-				
+						p.setData(xmlr.getText());				
 				}
 			break;
 			}
@@ -330,13 +326,10 @@ public class XML {
 	
 //----------------------------------------------------metodi di stampa------------------------------------------------------
 	
-	public void stampaCodici(ArrayList<CodiceFiscale> vettoreCodici) {
-		
-	}
-
 	
-	
-	public void stampaPersona(ArrayList<Persona> vettorePersone) {
+	//metodo di output che scrive sul file codiciPersone.xml
+	public void stampaPersona(ArrayList<Persona> vettorePersone, ArrayList<CodiceFiscale> vettoreCodici, ArrayList<CodiceFiscale> vettoreCodiciInvalidi) {
+		//tutti i tag di persona
 		String[] vociTag = {"nome", "cognome", "sesso", "comune_nascita", "data_nascita", "codice_fiscale"};
 		
 		XMLOutputFactory xmlof = null;
@@ -355,9 +348,15 @@ public class XML {
 		try { // blocco try per raccogliere eccezioni
 		xmlw.writeStartElement("Output"); // scrittura del tag radice 
 		
+	
+//++++++blocco stampa persone
+		xmlw.writeStartElement("persone");// scrittura del tag persone
+		xmlw.writeAttribute("numero", Integer.toString(vettorePersone.size())); // ...con attributo id uguale al numero delle persone
+		
+		//ciclo di stampa delle persone con tutti i loro tag
 		for (int i = 0; i < vettorePersone.size(); i++) {
 			Persona p = vettorePersone.get(i);
-			xmlw.writeStartElement("autore"); // scrittura del tag persona...
+			xmlw.writeStartElement("persona"); // scrittura del tag persona...
 			xmlw.writeAttribute("id", Integer.toString(i)); // ...con attributo id..
 			for (int j = 0; j < vociTag.length; j++) {
 				xmlw.writeStartElement(vociTag[j]); // scrittura del tag XXXX...
@@ -366,7 +365,35 @@ public class XML {
 			} 
 			xmlw.writeEndElement(); // chiusura di </persona>
 		}
-		xmlw.writeEndElement(); // chiusura di </programmaArnaldo>
+		xmlw.writeEndElement(); // chiusura di </persone>
+		
+//++++++blocco stamp codici
+		xmlw.writeStartElement("codici");
+		
+   //---codici invalidi
+		xmlw.writeStartElement("codici invalidi");// scrittura del tag codici invalidi
+		xmlw.writeAttribute("numero", Integer.toString(vettoreCodiciInvalidi.size())); // ...con attributo id uguale al numero delle persone
+		//ciclo di stampa dei codici invalidi
+		for (int i = 0; i < vettoreCodiciInvalidi.size(); i++) {
+			xmlw.writeStartElement("codice"); // scrittura del tag codice...
+			xmlw.writeCharacters(vettoreCodiciInvalidi.get(i).stampaCodiceFiscale()); // ...con content dato
+			xmlw.writeEndElement(); // chiusura di codice
+			} 
+		xmlw.writeEndElement(); // chiusura di </codici invalidi>
+
+   //---codici invalidi
+		xmlw.writeStartElement("codici spaiati");// scrittura del tag codici spaiati
+		xmlw.writeAttribute("numero", Integer.toString(vettoreCodici.size())); // ...con attributo id uguale al numero delle persone
+		//ciclo di stampa dei codici invalidi
+		for (int i = 0; i < vettoreCodici.size(); i++) {
+			xmlw.writeStartElement("codice"); // scrittura del tag codice...
+			xmlw.writeCharacters(vettoreCodici.get(i).stampaCodiceFiscale()); // ...con content dato
+			xmlw.writeEndElement(); // chiusura di codice
+		} 
+		xmlw.writeEndElement(); // chiusura di </codici spaiati>
+		
+		
+		xmlw.writeEndElement(); // chiusura di </Output>
 		xmlw.writeEndDocument(); // scrittura della fine del documento
 		xmlw.flush(); // svuota il buffer e procede alla scrittura
 		xmlw.close(); // chiusura del documento e delle risorse impiegate
@@ -384,13 +411,13 @@ public class XML {
 			stringaRitorno = p.getCognome();
 		}
 		else if (j == 2) {
-			stringaRitorno = "" +p.getSessoPerCodice();
+			stringaRitorno = p.getSessoPerCodice();
 		}
 		else if (j == 3) {
-			stringaRitorno = p.getDataNascita().stampaData();
+			stringaRitorno = p.getNomeComune();
 		}
 		else if (j == 4) {
-			stringaRitorno = p.getNomeComune();
+			stringaRitorno = p.getDataNascita().stampaData();
 		}
 		else {
 			if (p.getpresenzaCodice())

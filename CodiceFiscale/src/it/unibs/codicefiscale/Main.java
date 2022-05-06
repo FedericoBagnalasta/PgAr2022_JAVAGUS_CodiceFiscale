@@ -17,7 +17,7 @@ public class Main {
 		System.out.println(l.getCodiceComune("CAVALLINO-TREPORTI"));
 
 		
-		persone.creaCodici();
+		//persone.creaCodici();
 		//persone.presenzaCodicePersone();
 		
 		//persone.validitaCodici();
@@ -31,6 +31,7 @@ public class Main {
 			
 		System.out.println(persone.vettoreCodici.size());
 		System.out.println(persone.vettorePersone.get(127).getNomeComune());
+		System.out.println(persone.vettorePersone.get(127).getDataNascita().stampaData());
 
 	
 	

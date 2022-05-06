@@ -41,6 +41,7 @@ public class ElencoPersone {
 		for (int i = 0; i < vettorePersone.size(); i++) {
 			for (int j = 0; j < vettoreCodici.size(); j++) {
 				if (vettorePersone.get(i).getCodice().equals(vettoreCodici.get(j))) {
+					vettorePersone.get(i).setpresenzaCodice(true);
 					vettoreCodici.remove(j);
 				}
 				else 
@@ -64,10 +65,7 @@ public class ElencoPersone {
 //---------------------------------------------------output-----------------------------------------------------------------
 	
 	public void stampaOutput() {
-		
-			dialogo.stampaPersona(vettorePersone);
-				
-	
+			dialogo.stampaPersona(vettorePersone, vettoreCodici, vettoreCodiciErrati);
 	}
 	
 

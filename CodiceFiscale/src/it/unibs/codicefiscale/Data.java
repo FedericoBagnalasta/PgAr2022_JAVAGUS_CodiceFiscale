@@ -32,7 +32,7 @@ public class Data {
 	
 	public String stampaData() { 
 		String h = "" ;
-		if (anno < 10) h += "0" + anno + "-";
+		h += anno + "-";
 		if (mese < 10) h += "0" + mese + "-";
 		else h += mese + "-";
 		if (giorno < 10) h += "0" + giorno;
