@@ -69,32 +69,73 @@ public class Persona {
 //------------------------------------------------------dati per creare codice-------------------------------------------------------
 	
 	public String getNomePerCodice(String nomePersona) {
-		String nomeCodice;
+		String nomeCodice = "";
 		char [] consonanti = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'z',
 							'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'Z'};
-		if(nomePersona.length()<4) {
-			nomeCodice = nomePersona;
-			while(nomeCodice.length()<3) {
-				nomeCodice.concat("X");
-			}
-		}
-		else {
-			String consonantiCodice;
-			for(int i=0; i<nomePersona.length(); i++) {
-				for(int j=0; j<consonanti.length; j++) {
+		char [] vocali = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+		
+			String consonantiCodice = "", vocaliCodice = "";
+			
+				for(int i=0; i < nomePersona.length(); i++) {
+				for(int j=0; j < consonanti.length; j++) {
 				if(nomePersona.charAt(i) == consonanti[j]){
-					cosonantiCodice.concat(nomePersona.charAt());
-					
+					consonantiCodice.concat(nomePersona.substring(i, i+1));
 					}
+				}
+				for(int j=0; j < vocali.length; j++) {
+				if(nomePersona.charAt(i) == vocali[j]){
+					vocaliCodice.concat(nomePersona.substring(i, i+1));
+					}
+				}
+				}
+				if(consonantiCodice.length()==3) {
+					nomeCodice = consonantiCodice;
+				}
+				else if(consonantiCodice.length()<3) {
+					nomeCodice = consonantiCodice;
+					if(vocaliCodice.length() + nomeCodice.length() < 3) {
+						while(nomeCodice.length()<3) {
+							nomeCodice.concat("X");
+						}
+					}
+					else nomeCodice.concat(vocaliCodice.substring(0, 3-consonantiCodice.length()));
+				}
+				else if(consonantiCodice.length()>3) {
+					nomeCodice.concat(consonantiCodice.substring(0,1));
+					nomeCodice.concat(consonantiCodice.substring(2,4));
+				}
+		return nomeCodice;
+	}
+
+	public String getCognomePerCodice(String cognomePersona) {
+		String cognomeCodice = "";
+		char [] consonanti = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'z',
+							'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'Z'};
+		char [] vocali = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+		
+		String consonantiCodice = "", vocaliCodice = "";
+		
+		for(int i=0; i < cognomePersona.length(); i++) {
+			for(int j=0; j < consonanti.length; j++) {
+			if(cognomePersona.charAt(i) == consonanti[j]){
+				consonantiCodice.concat(cognomePersona.substring(i, i+1));
+				}
+			}
+			for(int j=0; j < vocali.length; j++) {
+			if(cognomePersona.charAt(i) == vocali[j]){
+				vocaliCodice.concat(cognomePersona.substring(i, i+1));
 				}
 			}
 		}
-		
-		return null;
-	}
-
-	public String getCognomePerCodice() {
-		return null;
+		for(int i=0; i<3; i++) {
+		if(consonantiCodice.length() > i) {
+			cognomeCodice.concat(consonantiCodice.substring(i, i+1));
+			}
+		else if (vocaliCodice.length() > i) {
+			cognomeCodice.concat(vocaliCodice.substring(i, i+1));
+			}
+		}	
+		return cognomeCodice;
 	}
 
 	public String getAnnoPerCodice() {
@@ -110,8 +151,25 @@ public class Persona {
 		this.sesso = (text.charAt(0));
 	}
 	
-	public String getGiornoPerCodice() {
-		return null;
+	public String getGiornoPerCodice(int giornoPersona) {
+		String monoGiorno;
+		String _giornoPersona = "0";
+		
+		if(giornoPersona < 10) {
+			monoGiorno = String.valueOf(giornoPersona);
+			_giornoPersona.concat(monoGiorno);
+		}		
+		if(giornoPersona >= 10 && giornoPersona <= 31) _giornoPersona = String.valueOf(giornoPersona);
+		
+		if(sesso == 'F') {
+			giornoPersona = giornoPersona + 40;
+			_giornoPersona = String.valueOf(giornoPersona);
+		}
+		if(sesso == 'M') {
+			monoGiorno = String.valueOf(giornoPersona);
+			_giornoPersona.concat(monoGiorno);
+		}
+		return _giornoPersona;
 	}
 	
 	

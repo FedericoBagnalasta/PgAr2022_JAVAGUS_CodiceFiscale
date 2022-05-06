@@ -59,7 +59,7 @@ public class XML {
 			    	 //System.out.println("open-Tag " + xmlr.getLocalName());
 				break;
 			
-			case XMLStreamConstants.CHARACTERS: // content all�interno di un elemento: stampa il testo
+			case XMLStreamConstants.CHARACTERS: // content all'interno di un elemento: stampa il testo
 				if (xmlr.getText().trim().length() > 0)  {
 				CodiceFiscale c = new CodiceFiscale(xmlr.getText());
 				vettoreCodici.add(c);
