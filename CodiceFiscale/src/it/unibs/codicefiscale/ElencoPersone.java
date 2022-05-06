@@ -9,17 +9,15 @@ public class ElencoPersone {
 	ArrayList<CodiceFiscale> vettoreCodici = new ArrayList<>();
 	ArrayList<Persona> vettorePersone = new ArrayList<>();
 	ArrayList<CodiceFiscale> vettoreCodiciErrati = new ArrayList<>();
-	ArrayList<String> vettoreComuni = new ArrayList<>();
 	
 	//nuovo oggetto della classe XML
 	private XML dialogo = new XML();
 	
-	//costruttore
+	//costruttore 
 	public ElencoPersone() throws XMLStreamException{
 		//invocazione dei metodi sull'oggetto dialogo, in modo da recuperare i dati utili
 		dialogo.recuperaCodici(vettoreCodici);
 		dialogo.recuperaPersone(vettorePersone);
-		dialogo.recuperaComuni(vettoreComuni);
 	}
 	
 	//metodo che crea i rispettivi codici di ogni persona
@@ -31,7 +29,7 @@ public class ElencoPersone {
 			CodiceFiscale codice = new CodiceFiscale(_persona.getNomePerCodice(), _persona.getCognomePerCodice(), 
 					_persona.getAnnoPerCodice(), _persona.getGiornoPerCodice(), _persona.getCodiceComune(), _persona.getSessoPerCodice());
 			_persona.setCodice(codice);
-			System.out.println(codice.stampaCodiceFiscale());
+			//System.out.println(codice.stampaCodiceFiscale());
 		}
 	}
 	
@@ -44,10 +42,9 @@ public class ElencoPersone {
 			for (int j = 0; j < vettoreCodici.size(); j++) {
 				if (vettorePersone.get(i).getCodice().equals(vettoreCodici.get(j))) {
 					vettoreCodici.remove(j);
-					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 				}
 				else 
-					vettorePersone.get(i).presenzaCodice(false);
+					vettorePersone.get(i).setpresenzaCodice(false);
 			}
 		}
 			

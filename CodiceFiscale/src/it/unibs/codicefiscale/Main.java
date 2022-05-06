@@ -20,7 +20,7 @@ public class Main {
 		persone.creaCodici();
 		//persone.presenzaCodicePersone();
 		
-		persone.validitaCodici();
+		//persone.validitaCodici();
 		
 		persone.stampaOutput();
 		
@@ -30,6 +30,7 @@ public class Main {
 		//} 
 			
 		System.out.println(persone.vettoreCodici.size());
+		System.out.println(persone.vettorePersone.get(127).getNomeComune());
 
 	
 	

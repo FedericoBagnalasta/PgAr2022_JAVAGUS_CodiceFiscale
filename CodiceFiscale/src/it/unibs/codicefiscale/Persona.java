@@ -25,6 +25,10 @@ public class Persona {
 	public String getNomePersona() {
 		return nome;
 	}
+	public String getCognome() {
+		return cognome;
+	}
+
 
 	
 //-------------------------------------------------------------comune----------------------------------------------------------------
@@ -56,14 +60,13 @@ public class Persona {
 	}
 	
 	
-//------------------------------------------------------dati per creare codice-----------------------------------------------------
+//------------------------------------------------------dati per creare codice-------------------------------------------------------
 	
 	public String getNomePerCodice() {
 		return null;
 	}
 
 	public String getCognomePerCodice() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -73,21 +76,19 @@ public class Persona {
 	
 	
 	public char getSessoPerCodice() {
-		// TODO Auto-generated method stub
-		return 0;
+		return sesso;
 	}
 	
 	public void setSesso(String text) {
-		// TODO Auto-generated method stub
+		this.sesso = (text.charAt(0));
 	}
 	
 	public String getGiornoPerCodice() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	
-//-------------------------------------------------------------data----------------------------------------------------------------
+//-------------------------------------------------------------data------------------------------------------------------------------
 
 	public void setData(String text) {
 		int anno = Integer.parseInt(text.substring(0, 4));
@@ -101,12 +102,16 @@ public class Persona {
 	}
 	
 	
-//------------------------------------------------metodi di verifica------------------------------------------------------------	
+//------------------------------------------------metodi di verifica-----------------------------------------------------------------	
 	
-	public void presenzaCodice(boolean f) {
-		// TODO Auto-generated method stub
+	public boolean getpresenzaCodice() {
+		return presenzaCodice;
 	}
-
+	
+	public void setpresenzaCodice(boolean b) {
+		this.presenzaCodice = b;
+	}
+	
 	//metodo che controlla che l'oggeto perona sia istanziato
 	public boolean presenzaPersona() {
 		if (nome == null && cognome == null)
@@ -114,6 +119,9 @@ public class Persona {
 		else 
 			return true;
 	}
+
+
+
 
 
 	

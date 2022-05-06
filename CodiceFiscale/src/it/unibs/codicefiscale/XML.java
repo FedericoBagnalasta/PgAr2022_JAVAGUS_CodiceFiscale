@@ -2,8 +2,6 @@ package it.unibs.codicefiscale;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -37,7 +35,7 @@ public class XML {
 	
 //---------------------------------------------metodi che recuperano i valori dai file------------------------------------	
 	
-	//metodo che legge dal file xml i codici e li mette in una lista
+	//metodo che legge dal file xml i codiciFiscali e li mette in una lista
 	public void recuperaCodici(ArrayList<CodiceFiscale> vettoreCodici) throws XMLStreamException {
 		
 		{
@@ -74,7 +72,7 @@ public class XML {
 		}
 	}
 
-	//metodo che legge dal file xml le persone e le inserisce nell'arrey
+	//metodo che legge dal file xml le persone e le inserisce in una lista
 	public void recuperaPersone(ArrayList<Persona> vettorePersone) throws XMLStreamException {
 		
 		{
@@ -146,7 +144,6 @@ public class XML {
 			xmlr.next();
 			}
 	}
-
 	//metodo che crea due file necessari a calcolare il carattere di controllo
 	public void stampaCaratteri(String pari_dispari) {
 		String[] caratteri = {"0",  "1",  "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9", 
@@ -206,9 +203,50 @@ public class XML {
 		}
 	}
 	
-	//metodo che legge dal file xml i codici dei comuni e li mette in una lista
-	public void recuperaComuni(ArrayList<String> vettoreComuni) {		
+	//metodo che restituisce il codice di un comune dal file xml, partendo dal nome del comune stesso
+	public String getCodiceComune(String nomeComune) throws XMLStreamException {
+
+		{
+			try {
+				xmlif = XMLInputFactory.newInstance();
+				xmlr = xmlif.createXMLStreamReader("comuni.xml" , new FileInputStream("comuni.xml"));
+			} catch (Exception e) {
+				System.out.println("Errore nell'inizializzazione del reader:");
+				System.out.println(e.getMessage());}
+		}
+
+		boolean giusto = false;boolean nome = false;	
+		while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+
+			switch (xmlr.getEventType()) { // switch sul tipo di evento
+			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
+				//System.out.println("Start Read Doc " + "comuni.xml"); 
+				break;
+
+			case XMLStreamConstants.START_ELEMENT: // inizio di un elemento: stampa il nome del tag e i suoi attributi
+				if (xmlr.getLocalName().equals(tag_nome_comune)) {
+					nome = true;
+				}
+				break;
+
+			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+				if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
+					if (nome && xmlr.getText().equals(nomeComune)) {
+						//System.out.println("trovato");
+						giusto = true;
+					}
+					else if (giusto) {
+						return xmlr.getText();
+					}
+				}
+				break;
+			}
+			xmlr.next();
+		}
+		return nomeComune;
+
 	}
+
 //--------------------------------------------------------metodi carattere controllo--------------------------------------
 	
 	public int valoreNumeroDispari(char charAt) throws XMLStreamException {
@@ -290,69 +328,89 @@ public class XML {
 	}
 	
 	
-//----------------------------------------------------fine metodi carattere controllo--------------------------------------
-
 //----------------------------------------------------metodi di stampa------------------------------------------------------
 	
-	//metodo che restituisce il codice di un comune, partendo dal nome del comune stesso
-	public String getCodiceComune(String nomeComune) throws XMLStreamException {
-
-		{
-			try {
-				xmlif = XMLInputFactory.newInstance();
-				xmlr = xmlif.createXMLStreamReader("comuni.xml" , new FileInputStream("comuni.xml"));
-				} catch (Exception e) {
-				System.out.println("Errore nell'inizializzazione del reader:");
-				System.out.println(e.getMessage());}
-				}
-			
-			 boolean giusto = false;boolean nome = false;	
-			while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
-							
-				switch (xmlr.getEventType()) { // switch sul tipo di evento
-				case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
-					System.out.println("Start Read Doc " + "comuni.xml"); 
-					break;
-				
-				case XMLStreamConstants.START_ELEMENT: // inizio di un elemento: stampa il nome del tag e i suoi attributi
-				     if (xmlr.getLocalName().equals(tag_nome_comune)) {
-				    	 nome = true;
-				    	
-				    	 }
-				     if (nome ) {
-				    	 
-				     }
-				     break;
-				     
-				case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
-					if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
-						if (nome && xmlr.getText().equals(nomeComune)) {
-							 System.out.println("trovato");
-							giusto = true;
-						}
-						else if (giusto) {
-							return xmlr.getText();
-						}
-					}
-				break;
-				}
-				xmlr.next();
-				}
-			return nomeComune;
+	public void stampaCodici(ArrayList<CodiceFiscale> vettoreCodici) {
 		
 	}
 
 	
+	
 	public void stampaPersona(ArrayList<Persona> vettorePersone) {
-		int dimensione = vettorePersone.size();
-		for(int i = 0; i < vettorePersone.size(); i++ ) {
-			Persona personaAttuale = vettorePersone.get(i);
-			
-			
-			personaAttuale.getDataNascita().stampaData();
-		}		
-			
+		String[] vociTag = {"nome", "cognome", "sesso", "comune_nascita", "data_nascita", "codice_fiscale"};
 		
+		XMLOutputFactory xmlof = null;
+		XMLStreamWriter xmlw = null;
+		{
+			try {
+		xmlof = XMLOutputFactory.newInstance();
+		xmlw = xmlof.createXMLStreamWriter(new FileOutputStream("codiciPersone.xml"), "utf-8");
+		xmlw.writeStartDocument("utf-8", "1.0");
+		} catch (Exception e) {
+		System.out.println("Errore nell'inizializzazione del writer:");
+		System.out.println(e.getMessage());
+			}
+		}
+
+		try { // blocco try per raccogliere eccezioni
+		xmlw.writeStartElement("Output"); // scrittura del tag radice 
+		
+		for (int i = 0; i < vettorePersone.size(); i++) {
+			Persona p = vettorePersone.get(i);
+			xmlw.writeStartElement("autore"); // scrittura del tag persona...
+			xmlw.writeAttribute("id", Integer.toString(i)); // ...con attributo id..
+			for (int j = 0; j < vociTag.length; j++) {
+				xmlw.writeStartElement(vociTag[j]); // scrittura del tag XXXX...
+				xmlw.writeCharacters(contentAttuale(p, j)); // ...con content dato
+				xmlw.writeEndElement(); // chiusura di XXXX
+			} 
+			xmlw.writeEndElement(); // chiusura di </persona>
+		}
+		xmlw.writeEndElement(); // chiusura di </programmaArnaldo>
+		xmlw.writeEndDocument(); // scrittura della fine del documento
+		xmlw.flush(); // svuota il buffer e procede alla scrittura
+		xmlw.close(); // chiusura del documento e delle risorse impiegate
+		} catch (Exception e) { // se c’è un errore viene eseguita questa parte
+		System.out.println("Errore nella scrittura");
+		}
 	}
 
+	private String contentAttuale(Persona p, int j) {
+		String stringaRitorno = null;
+		if (j == 0) {
+			stringaRitorno = p.getNomePersona();
+		}
+		else if (j == 1) {
+			stringaRitorno = p.getCognome();
+		}
+		else if (j == 2) {
+			stringaRitorno = "" +p.getSessoPerCodice();
+		}
+		else if (j == 3) {
+			stringaRitorno = p.getDataNascita().stampaData();
+		}
+		else if (j == 4) {
+			stringaRitorno = p.getNomeComune();
+		}
+		else {
+			if (p.getpresenzaCodice())
+			stringaRitorno = p.getCodice().stampaCodiceFiscale();
+			else 
+				stringaRitorno = "ASSENTE";
+		}
+		
+		if (stringaRitorno == null)
+			return "NESSUN DATO";
+		else 
+			return stringaRitorno;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
