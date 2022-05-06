@@ -26,7 +26,7 @@ public class ElencoPersone {
 		for (int i = 0; i < vettorePersone.size(); i ++) {
 			_persona = vettorePersone.get(i);
 			_persona.setCodiceComune(dialogo.getCodiceComune(_persona.getNomeComune()));
-			CodiceFiscale codice = new CodiceFiscale(_persona.getNomePerCodice(), _persona.getCognomePerCodice(), 
+			CodiceFiscale codice = new CodiceFiscale(_persona.getNomePerCodice(_persona.getNomePersona()), _persona.getCognomePerCodice(), 
 					_persona.getAnnoPerCodice(), _persona.getGiornoPerCodice(), _persona.getCodiceComune(), _persona.getSessoPerCodice());
 			_persona.setCodice(codice);
 			//System.out.println(codice.stampaCodiceFiscale());
@@ -50,7 +50,7 @@ public class ElencoPersone {
 			
 	}
 	
-	//metodo che verifica se tra i codici c'è ne sono invalidi, e li mette in una lista
+	//metodo che verifica se tra i codici c'ï¿½ ne sono invalidi, e li mette in una lista
 	public void validitaCodici() throws XMLStreamException {
 		for (int i = 0; i < vettoreCodici.size(); i++) {
 			CodiceFiscale verifica = vettoreCodici.get(i);

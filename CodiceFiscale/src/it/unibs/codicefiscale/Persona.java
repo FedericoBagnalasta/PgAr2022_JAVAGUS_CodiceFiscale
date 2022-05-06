@@ -68,7 +68,26 @@ public class Persona {
 	
 //------------------------------------------------------dati per creare codice-------------------------------------------------------
 	
-	public String getNomePerCodice() {
+	public String getNomePerCodice(String nomePersona) {
+		String nomeCodice;
+		char [] consonanti = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'z'};
+		if(nomePersona.length()<4) {
+			nomeCodice = nomePersona;
+			while(nomeCodice.length()<3) {
+				nomeCodice.concat("X");
+			}
+		}
+		else {
+			String consonantiCodice;
+			for(int i=0; i<nomePersona.length(); i++) {
+				for(int j=0; j<consonanti.length; j++) {
+				if(CharacterCompare(nomePersona.charAt(i), consonanti(j)){
+					
+					}
+				}
+			}
+		}
+		
 		return null;
 	}
 

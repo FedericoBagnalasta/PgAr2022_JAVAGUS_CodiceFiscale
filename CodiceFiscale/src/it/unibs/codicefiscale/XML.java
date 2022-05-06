@@ -47,7 +47,7 @@ public class XML {
 		System.out.println(e.getMessage());}
 		}
 		
-		while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+		while (xmlr.hasNext()) { // continua a leggere finchï¿½ ha eventi a disposizione
 			
 			switch (xmlr.getEventType()) { // switch sul tipo di evento
 			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
@@ -59,7 +59,7 @@ public class XML {
 			    	 //System.out.println("open-Tag " + xmlr.getLocalName());
 				break;
 			
-			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+			case XMLStreamConstants.CHARACTERS: // content allï¿½interno di un elemento: stampa il testo
 				if (xmlr.getText().trim().length() > 0)  {
 				CodiceFiscale c = new CodiceFiscale(xmlr.getText());
 				vettoreCodici.add(c);
@@ -88,7 +88,7 @@ public class XML {
 		String next = null;
 		//bisogna creare una persona con i dati del file e poi aggiungere la persona al vettore
 		Persona p = new Persona();
-		while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+		while (xmlr.hasNext()) { // continua a leggere finchï¿½ ha eventi a disposizione
 			
 			switch (xmlr.getEventType()) { // switch sul tipo di evento
 			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
@@ -121,7 +121,7 @@ public class XML {
 				//System.out.println("END-Tag " + xmlr.getLocalName()); 
 				break;
 			
-			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+			case XMLStreamConstants.CHARACTERS: // content allï¿½interno di un elemento: stampa il testo
 				if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
 					
 					if (next.equals(tag_nome))
@@ -198,7 +198,7 @@ public class XML {
 		xmlw.flush(); // svuota il buffer e procede alla scrittura
 		System.out.println("scrittura");
 		xmlw.close(); // chiusura del documento e delle risorse impiegate
-		} catch (Exception e) { // se c’è un errore viene eseguita questa parte
+		} catch (Exception e) { // se cï¿½ï¿½ un errore viene eseguita questa parte
 		System.out.println("Errore nella scrittura");
 		}
 	}
@@ -216,7 +216,7 @@ public class XML {
 		}
 
 		boolean giusto = false;boolean nome = false;	
-		while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+		while (xmlr.hasNext()) { // continua a leggere finchï¿½ ha eventi a disposizione
 
 			switch (xmlr.getEventType()) { // switch sul tipo di evento
 			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
@@ -229,7 +229,7 @@ public class XML {
 				}
 				break;
 
-			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+			case XMLStreamConstants.CHARACTERS: // content allï¿½interno di un elemento: stampa il testo
 				if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
 					if (nome && xmlr.getText().equals(nomeComune)) {
 						//System.out.println("trovato");
@@ -261,7 +261,7 @@ public class XML {
 			}
 		
 		int next = 0;
-		while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+		while (xmlr.hasNext()) { // continua a leggere finchï¿½ ha eventi a disposizione
 			
 			switch (xmlr.getEventType()) { // switch sul tipo di evento
 			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
@@ -274,7 +274,7 @@ public class XML {
 			     }
 			     break;
 			     
-			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+			case XMLStreamConstants.CHARACTERS: // content allï¿½interno di un elemento: stampa il testo
 				if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
 					Character y = xmlr.getText().charAt(0);
 					if (y.equals(charAt)) {
@@ -300,7 +300,7 @@ public class XML {
 			}
 		
 		int next = 0;
-		while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+		while (xmlr.hasNext()) { // continua a leggere finchï¿½ ha eventi a disposizione
 			
 			switch (xmlr.getEventType()) { // switch sul tipo di evento
 			case XMLStreamConstants.START_DOCUMENT: // inizio del documento: stampa che inizia il documento
@@ -313,7 +313,7 @@ public class XML {
 			     }
 			     break;
 			     
-			case XMLStreamConstants.CHARACTERS: // content all’interno di un elemento: stampa il testo
+			case XMLStreamConstants.CHARACTERS: // content allï¿½interno di un elemento: stampa il testo
 				if (xmlr.getText().trim().length() > 0) {// controlla se il testo non contiene solo spazi
 					Character y = xmlr.getText().charAt(0);
 					if (y.equals(charAt)) {
@@ -370,7 +370,7 @@ public class XML {
 		xmlw.writeEndDocument(); // scrittura della fine del documento
 		xmlw.flush(); // svuota il buffer e procede alla scrittura
 		xmlw.close(); // chiusura del documento e delle risorse impiegate
-		} catch (Exception e) { // se c’è un errore viene eseguita questa parte
+		} catch (Exception e) { // se cï¿½ï¿½ un errore viene eseguita questa parte
 		System.out.println("Errore nella scrittura");
 		}
 	}
