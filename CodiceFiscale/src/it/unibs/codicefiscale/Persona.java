@@ -5,8 +5,8 @@ public class Persona {
 	private String nomeComuneNascita;
 	private String nome;
 	private String cognome;
-	private char sesso;
-	private boolean presenzaCodice = true;
+	private String sesso;
+	private boolean presenzaCodice = false;
 	private String codiceComune;
 	private CodiceFiscale cf = new CodiceFiscale(null);
 	private Data dataNascita = new Data();
@@ -143,15 +143,15 @@ public class Persona {
 	}
 	
 	
-	public char getSessoPerCodice() {
+	public String getSessoPerCodice() {
 		return sesso;
 	}
 	
 	public void setSesso(String text) {
-		this.sesso = (text.charAt(0));
+		this.sesso = text;
 	}
 	
-	public String getGiornoPerCodice(int giornoPersona) {
+	public String getGiornoPerCodice(int giornoPersona, String sesso) {
 		String monoGiorno;
 		String _giornoPersona = "0";
 		
@@ -161,11 +161,11 @@ public class Persona {
 		}		
 		if(giornoPersona >= 10 && giornoPersona <= 31) _giornoPersona = String.valueOf(giornoPersona);
 		
-		if(sesso == 'F') {
+		if(sesso == "F") {
 			giornoPersona = giornoPersona + 40;
 			_giornoPersona = String.valueOf(giornoPersona);
 		}
-		if(sesso == 'M') {
+		if(sesso == "M") {
 			monoGiorno = String.valueOf(giornoPersona);
 			_giornoPersona.concat(monoGiorno);
 		}

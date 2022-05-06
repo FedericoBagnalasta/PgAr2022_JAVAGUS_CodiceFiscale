@@ -16,8 +16,28 @@ private static final String VERIFICA_LA_CORRETTEZZA_DEI_CODICI = "Verifica la co
 private static final String VERIFICA_LA_PRESENZA_DEI_CODICI = "Verifica la presenza dei codici";
 private static final String VISUALIZZA_ELENCO_PERSONE = "Visualizza elenco persone";
 
+
 public static void main(String[] args) throws XMLStreamException {
 
+/*		
+		//persone.creaCodici();
+		//persone.presenzaCodicePersone();
+		
+		//persone.validitaCodici();
+		
+		persone.stampaOutput();
+		
+		
+		//for (int i = 0; i < persone.vettorePersone.size(); i++) {
+		//	System.out.println(persone.vettorePersone.get(i).getDataNascita().stampaData());
+		//} 
+			
+		System.out.println(persone.vettoreCodici.size());
+		System.out.println(persone.vettorePersone.get(127).getNomeComune());
+		System.out.println(persone.vettorePersone.get(127).getDataNascita().stampaData());
+*/
+	
+	
 ElencoPersone persone = new ElencoPersone();
 
 //condizione di permanenza nel menu

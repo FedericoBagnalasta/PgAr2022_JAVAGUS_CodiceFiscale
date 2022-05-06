@@ -8,7 +8,7 @@ public class CodiceFiscale {
 
 	
 	//costruttore per creare un nuovo codice
-	public CodiceFiscale (String nome,  String cognome,  String annoEmese,String giorno, String comune, char sesso) throws XMLStreamException{
+	public CodiceFiscale (String nome,  String cognome,  String annoEmese,String giorno, String comune, String sesso) throws XMLStreamException{
 		this.codiceIncompleto = cognome + nome + annoEmese + giorno + comune;
 		this.codiceFiscale = codiceIncompleto + carattereControllo(codiceIncompleto);
 		
