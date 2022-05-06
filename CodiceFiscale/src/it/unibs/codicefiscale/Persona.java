@@ -70,7 +70,8 @@ public class Persona {
 	
 	public String getNomePerCodice(String nomePersona) {
 		String nomeCodice;
-		char [] consonanti = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'z'};
+		char [] consonanti = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'z',
+							'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'Z'};
 		if(nomePersona.length()<4) {
 			nomeCodice = nomePersona;
 			while(nomeCodice.length()<3) {
@@ -81,7 +82,8 @@ public class Persona {
 			String consonantiCodice;
 			for(int i=0; i<nomePersona.length(); i++) {
 				for(int j=0; j<consonanti.length; j++) {
-				if(CharacterCompare(nomePersona.charAt(i), consonanti(j)){
+				if(nomePersona.charAt(i) == consonanti[j]){
+					cosonantiCodice.concat(nomePersona.charAt());
 					
 					}
 				}
