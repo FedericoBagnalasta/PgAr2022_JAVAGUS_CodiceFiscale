@@ -8,8 +8,8 @@ public class CodiceFiscale {
 
 	
 	//costruttore per creare un nuovo codice
-	public CodiceFiscale (String nome,  String cognome,  String data, String comune, char sesso) throws XMLStreamException{
-		this.codiceIncompleto = cognome + nome + data + comune;
+	public CodiceFiscale (String nome,  String cognome,  String annoEmese,String giorno, String comune, char sesso) throws XMLStreamException{
+		this.codiceIncompleto = cognome + nome + annoEmese + giorno + comune;
 		this.codiceFiscale = codiceIncompleto + carattereControllo(codiceIncompleto);
 		
 	}
@@ -22,7 +22,9 @@ public class CodiceFiscale {
 
 	}
 
-
+	public String stampaCodiceFiscale() {
+		return codiceFiscale;
+	}
 	
 //-------------------------------------------------manipolazione codice fiscale--------------------------------------------
 	
@@ -125,8 +127,9 @@ public class CodiceFiscale {
 
 		for (int i = 0; i < 15; i+=2) {
 			sommaValoriPari += com.valoreNumeroDispari(codiceAttuale.charAt(i));
-			if (!(i==14))
+			if (!(i==14)) {
 				sommaValoriDispari += com.valoreNumeroPari(codiceAttuale.charAt(i+1));
+			}
 		}
 		resto = (sommaValoriPari + sommaValoriDispari) % 26;
 		

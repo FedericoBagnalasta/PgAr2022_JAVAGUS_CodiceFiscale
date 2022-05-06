@@ -2,7 +2,7 @@ package it.unibs.codicefiscale;
 
 public class Persona {
 	
-	private String comuneNascita;
+	private String nomeComuneNascita;
 	private String nome;
 	private String cognome;
 	private char sesso;
@@ -22,96 +22,113 @@ public class Persona {
 		 */
 	}
 	
+	public void setNomePersona(String text) {
+		nome = text;		
+	}
+	public void setCognome(String text) {
+		cognome = text;
+	}
+	public String getNomePersona() {
+		return nome;
+	}
+	public String getCognome() {
+		return cognome;
+	}
+
+
+	
+//-------------------------------------------------------------comune----------------------------------------------------------------
+
+	public void setNomeComune(String text) {
+		nomeComuneNascita = text;
+	}
+	public String getNomeComune() {
+		return nomeComuneNascita;
+	}
+	
+	
+	public void setCodiceComune(String codiceComune) {
+		this.codiceComune = codiceComune;		
+	}
+	public String getCodiceComune() {
+		return codiceComune;
+	}
+	
+	
+//-------------------------------------------------------------codiceF----------------------------------------------------------------	
+	
+	public void setCodice(CodiceFiscale codice) {
+		this.cf = codice;
+	}
+	
 	public CodiceFiscale getCodice() {
 		return cf;
 	}
-
-	public void setCodice(CodiceFiscale codice) {
-		// TODO Auto-generated method stub
-	}
 	
-
-	public String getNomeCodice() {
-		// TODO Auto-generated method stub
+	
+//------------------------------------------------------dati per creare codice-------------------------------------------------------
+	
+	public String getNomePerCodice() {
 		return null;
 	}
 
-	public String getCognomeCodice() {
-		// TODO Auto-generated method stub
+	public String getCognomePerCodice() {
 		return null;
 	}
 
-	public String getAnnoCodice() {
+	public String getAnnoPerCodice() {
 		return dataNascita.dataCodice();
 	}
 	
-	public Data getDataNascita() {
-		return dataNascita;
-		
+	
+	public char getSessoPerCodice() {
+		return sesso;
 	}
-
-	public char getSessoCodice() {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public void setSesso(String text) {
+		this.sesso = (text.charAt(0));
 	}
-
-	public String getCodiceComune() {
-		// TODO Auto-generated method stub
+	
+	public String getGiornoPerCodice() {
 		return null;
 	}
-
-	public void presenzaCodice(boolean f) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Object getNomeComune() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setCodiceComune(Object codiceComune) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setNome(String text) {
-		nome = text;		
-	}
+	
+	
+//-------------------------------------------------------------data------------------------------------------------------------------
 
 	public void setData(String text) {
 		int anno = Integer.parseInt(text.substring(0, 4));
 		int mese = Integer.parseInt(text.substring(5, 7));
 		int giorno = Integer.parseInt(text.substring(8, 10));
-		dataNascita.impostaData(giorno, mese, anno);
-		
+		dataNascita.impostaData(giorno, mese, anno);	
 	}
-
-	public void setCognome(String text) {
-		cognome = text;
-		
+	
+	public Data getDataNascita() {
+		return dataNascita;	
 	}
-
-	public void setSesso(String text) {
-		// TODO Auto-generated method stub
-		
+	
+	
+//------------------------------------------------metodi di verifica-----------------------------------------------------------------	
+	
+	public boolean getpresenzaCodice() {
+		return presenzaCodice;
 	}
-
-	public void setNomeComune(String text) {
-		// TODO Auto-generated method stub
-		
+	
+	public void setpresenzaCodice(boolean b) {
+		this.presenzaCodice = b;
 	}
-
-	public String getNome() {
-		return nome;
-	}
-
+	
+	//metodo che controlla che l'oggeto perona sia istanziato
 	public boolean presenzaPersona() {
 		if (nome == null && cognome == null)
 			return false;
 		else 
 			return true;
 	}
+
+
+
+
 
 	
 	
