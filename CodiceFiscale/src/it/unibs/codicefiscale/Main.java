@@ -18,8 +18,15 @@ private static final String VISUALIZZA_ELENCO_PERSONE = "Visualizza elenco perso
 
 
 public static void main(String[] args) throws XMLStreamException {
-
-/*		
+		
+	ElencoPersone persone = new ElencoPersone();
+	//CodiceFiscale cf = new CodiceFiscale("PSNLRI99D64C800M");
+	
+	XML l = new XML();
+	System.out.println(l.getCodiceComune("CAVALLINO-TREPORTI"));
+	
+	
+		
 		//persone.creaCodici();
 		//persone.presenzaCodicePersone();
 		
@@ -35,7 +42,7 @@ public static void main(String[] args) throws XMLStreamException {
 		System.out.println(persone.vettoreCodici.size());
 		System.out.println(persone.vettorePersone.get(127).getNomeComune());
 		System.out.println(persone.vettorePersone.get(127).getDataNascita().stampaData());
-*/
+
 	
 	
 ElencoPersone persone = new ElencoPersone();
