@@ -26,8 +26,8 @@ public class ElencoPersone {
 		for (int i = 0; i < vettorePersone.size(); i ++) {
 			_persona = vettorePersone.get(i);
 			_persona.setCodiceComune(dialogo.getCodiceComune(_persona.getNomeComune()));
-			CodiceFiscale codice = new CodiceFiscale(_persona.getNomePerCodice(_persona.getNomePersona()), _persona.getCognomePerCodice(_persona.getCognome()), 
-					_persona.getAnnoPerCodice(), _persona.getGiornoPerCodice(_persona.getDataNascita().getGiornoPerCodice(), _persona.getSessoPerCodice()), _persona.getCodiceComune(), _persona.getSessoPerCodice());
+			CodiceFiscale codice = new CodiceFiscale(_persona.getNomePerCodice(), _persona.getCognomePerCodice(), 
+					_persona.getAnnoPerCodice(), _persona.getGiornoPerCodice(), _persona.getCodiceComune());
 			_persona.setCodice(codice);
 			//System.out.println(codice.stampaCodiceFiscale());
 		}
@@ -39,19 +39,21 @@ public class ElencoPersone {
 	//metodo che verifica la presenza del codice della persona nel vettore di codici
 	public void presenzaCodicePersone() {
 		for (int i = 0; i < vettorePersone.size(); i++) {
+			CodiceFiscale cf = vettorePersone.get(i).getCodice();
 			for (int j = 0; j < vettoreCodici.size(); j++) {
-				if (vettorePersone.get(i).getCodice().equals(vettoreCodici.get(j))) {
+				if (cf.stampaCodiceFiscale().equals(vettoreCodici.get(j).stampaCodiceFiscale())) {
 					vettorePersone.get(i).setpresenzaCodice(true);
 					vettoreCodici.remove(j);
+					//System.out.println("okok");
+					break;
 				}
-				else 
-					vettorePersone.get(i).setpresenzaCodice(false);
+				
 			}
 		}
 			
 	}
 	
-	//metodo che verifica se tra i codici c'� ne sono invalidi, e li mette in una lista
+	//metodo che verifica se tra i codici c'e ne sono invalidi, e li mette in una lista
 	public void validitaCodici() throws XMLStreamException {
 		for (int i = 0; i < vettoreCodici.size(); i++) {
 			CodiceFiscale verifica = vettoreCodici.get(i);

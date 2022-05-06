@@ -6,6 +6,7 @@ public class Persona {
 	private String nome;
 	private String cognome;
 	private String sesso;
+	private int giorno;
 	private boolean presenzaCodice = false;
 	private String codiceComune;
 	private CodiceFiscale cf = new CodiceFiscale(null);
@@ -34,6 +35,13 @@ public class Persona {
 	public String getCognome() {
 		return cognome;
 	}
+	public String getSessoPerCodice() {
+		return sesso;
+	}
+	
+	public void setSesso(String text) {
+		this.sesso = text;
+	}
 
 
 	
@@ -45,8 +53,7 @@ public class Persona {
 	public String getNomeComune() {
 		return nomeComuneNascita;
 	}
-	
-	
+
 	public void setCodiceComune(String codiceComune) {
 		this.codiceComune = codiceComune;		
 	}
@@ -68,7 +75,8 @@ public class Persona {
 	
 //------------------------------------------------------dati per creare codice-------------------------------------------------------
 	
-	public String getNomePerCodice(String nomePersona) {
+	//metodo che restituisce una stringa del nome della persona, predisposta per la creazione di un codice fiscale
+	public String getNomePerCodice() {
 		String nomeCodice = "";
 		char [] consonanti = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'z',
 							'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'Z'};
@@ -76,15 +84,15 @@ public class Persona {
 		
 			String consonantiCodice = "", vocaliCodice = "";
 			
-				for(int i=0; i < nomePersona.length(); i++) {
+				for(int i=0; i < nome.length(); i++) {
 				for(int j=0; j < consonanti.length; j++) {
-				if(nomePersona.charAt(i) == consonanti[j]){
-					consonantiCodice.concat(nomePersona.substring(i, i+1));
+				if(nome.charAt(i) == consonanti[j]){
+					consonantiCodice += nome.charAt(i);
 					}
 				}
 				for(int j=0; j < vocali.length; j++) {
-				if(nomePersona.charAt(i) == vocali[j]){
-					vocaliCodice.concat(nomePersona.substring(i, i+1));
+				if(nome.charAt(i) == vocali[j]){
+					vocaliCodice += nome.charAt(i);
 					}
 				}
 				}
@@ -93,21 +101,23 @@ public class Persona {
 				}
 				else if(consonantiCodice.length()<3) {
 					nomeCodice = consonantiCodice;
-					if(vocaliCodice.length() + nomeCodice.length() < 3) {
+					if((vocaliCodice.length() + nomeCodice.length()) < 3) {
 						while(nomeCodice.length()<3) {
-							nomeCodice.concat("X");
+							nomeCodice += "X";
 						}
 					}
-					else nomeCodice.concat(vocaliCodice.substring(0, 3-consonantiCodice.length()));
+					else nomeCodice += vocaliCodice.substring(0, 3-consonantiCodice.length());
 				}
 				else if(consonantiCodice.length()>3) {
-					nomeCodice.concat(consonantiCodice.substring(0,1));
-					nomeCodice.concat(consonantiCodice.substring(2,4));
+					nomeCodice += consonantiCodice.substring(0,1);
+					nomeCodice += consonantiCodice.substring(2,4);
 				}
 		return nomeCodice;
 	}
 
-	public String getCognomePerCodice(String cognomePersona) {
+	
+	//metodo che restituisce una stringa del cognome della persona, predisposta per la creazione di un codice fiscale
+	public String getCognomePerCodice() {
 		String cognomeCodice = "";
 		char [] consonanti = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'z',
 							'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'Z'};
@@ -115,73 +125,82 @@ public class Persona {
 		
 		String consonantiCodice = "", vocaliCodice = "";
 		
-		for(int i=0; i < cognomePersona.length(); i++) {
-			for(int j=0; j < consonanti.length; j++) {
-			if(cognomePersona.charAt(i) == consonanti[j]){
-				consonantiCodice.concat(cognomePersona.substring(i, i+1));
-				}
-			}
+		for(int i=0; i < cognome.length(); i++) {
 			for(int j=0; j < vocali.length; j++) {
-			if(cognomePersona.charAt(i) == vocali[j]){
-				vocaliCodice.concat(cognomePersona.substring(i, i+1));
+			if(cognome.charAt(i) == vocali[j]){
+				vocaliCodice += cognome.charAt(i);
+				break;
 				}
 			}
+			for(int j=0; j < consonanti.length; j++) {
+			if(cognome.charAt(i) == consonanti[j]){
+				consonantiCodice += cognome.charAt(i);
+				break;
+				}
+			}
+			
 		}
-		for(int i=0; i<3; i++) {
-		if(consonantiCodice.length() > i) {
-			cognomeCodice.concat(consonantiCodice.substring(i, i+1));
+		if(consonantiCodice.length()==3) {
+			cognomeCodice = consonantiCodice;
+		}
+		else if(consonantiCodice.length()<3) {
+			cognomeCodice = consonantiCodice;
+			if((vocaliCodice.length() + cognomeCodice.length()) < 3) {
+				while(cognomeCodice.length()<3) {
+					cognomeCodice += "X";
+				}
 			}
-		else if (vocaliCodice.length() > i) {
-			cognomeCodice.concat(vocaliCodice.substring(i, i+1));
-			}
-		}	
+			else cognomeCodice += vocaliCodice.substring(0, 3-consonantiCodice.length());
+		}
+		else if(consonantiCodice.length()>3) {
+			cognomeCodice += consonantiCodice.substring(0,3);
+		}
 		return cognomeCodice;
 	}
 
+	//metodo che restituisce una stringa dell' anno di nascita della persona, predisposta per la creazione di un codice fiscale
 	public String getAnnoPerCodice() {
 		return dataNascita.dataCodice();
 	}
 	
-	
-	public String getSessoPerCodice() {
-		return sesso;
-	}
-	
-	public void setSesso(String text) {
-		this.sesso = text;
-	}
-	
-	public String getGiornoPerCodice(int giornoPersona, String sesso) {
+	//metodo che restituisce una stringa del giorno della persona, predisposta per la creazione di un codice fiscale
+	public String getGiornoPerCodice() {
 		String monoGiorno;
 		String _giornoPersona = "0";
 		
-		if(giornoPersona < 10) {
-			monoGiorno = String.valueOf(giornoPersona);
-			_giornoPersona.concat(monoGiorno);
+		if(giorno < 10) {
+			monoGiorno = String.valueOf(giorno);
+			_giornoPersona += monoGiorno;
 		}		
-		if(giornoPersona >= 10 && giornoPersona <= 31) _giornoPersona = String.valueOf(giornoPersona);
+		else 
+			_giornoPersona = String.valueOf(giorno);
+		if(giorno >= 10 && giorno <= 31) _giornoPersona = String.valueOf(giorno);
 		
-		if(sesso == "F") {
-			giornoPersona = giornoPersona + 40;
-			_giornoPersona = String.valueOf(giornoPersona);
+		if(sesso.equals("F")) {
+			giorno = giorno + 40;
+			_giornoPersona = String.valueOf(giorno);
 		}
-		if(sesso == "M") {
-			monoGiorno = String.valueOf(giornoPersona);
-			_giornoPersona.concat(monoGiorno);
-		}
+		
 		return _giornoPersona;
 	}
 	
 	
 //-------------------------------------------------------------data------------------------------------------------------------------
 
+	//metodo che istanzia l'oggetto data, partendo da una stringa
 	public void setData(String text) {
 		int anno = Integer.parseInt(text.substring(0, 4));
 		int mese = Integer.parseInt(text.substring(5, 7));
 		int giorno = Integer.parseInt(text.substring(8, 10));
+		setGiorno(giorno);
 		dataNascita.impostaData(giorno, mese, anno);	
 	}
 	
+	private void setGiorno(int giorno) {
+	this.giorno = giorno;
+	
+    }
+
 	public Data getDataNascita() {
 		return dataNascita;	
 	}

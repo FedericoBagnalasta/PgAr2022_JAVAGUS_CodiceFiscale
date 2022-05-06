@@ -21,7 +21,6 @@ public class XML {
 	private String tag_data = "data_nascita";
 	private String tag_codice_fiscale = "codice";
 	private String tag_nome_comune = "nome";
-	private String tag_codice_comune = "codice";
 	private final static String filenamePersone = "inputPersone.xml";
 	private final static String filenameCodici = "codiciFiscali.xml";
 	private static String fileValoreCaratteri = "";
@@ -244,7 +243,7 @@ public class XML {
 	}
 
 //--------------------------------------------------------metodi carattere controllo--------------------------------------
-	
+	//metodo che calcola il valore di un carattere in base al valore registrato in un file xml
 	public int valoreNumeroDispari(char charAt) throws XMLStreamException {
 	
 		{
@@ -284,6 +283,7 @@ public class XML {
 		return next;
 	}
 
+	//metodo che calcola il valore di un carattere in base al valore registrato in un file xml
 	public int valoreNumeroPari(char charAt) throws XMLStreamException {
 		
 		{
@@ -402,6 +402,7 @@ public class XML {
 		}
 	}
 
+	//metodo che ritorna il nome del tag attuale della persona
 	private String contentAttuale(Persona p, int j) {
 		String stringaRitorno = null;
 		if (j == 0) {

@@ -8,7 +8,7 @@ public class CodiceFiscale {
 
 	
 	//costruttore per creare un nuovo codice
-	public CodiceFiscale (String nome,  String cognome,  String annoEmese,String giorno, String comune, String sesso) throws XMLStreamException{
+	public CodiceFiscale (String nome,  String cognome,  String annoEmese, String giorno, String comune) throws XMLStreamException{
 		this.codiceIncompleto = cognome + nome + annoEmese + giorno + comune;
 		this.codiceFiscale = codiceIncompleto + carattereControllo(codiceIncompleto);
 		
@@ -33,33 +33,22 @@ public class CodiceFiscale {
 	 public boolean controlloCodice () throws XMLStreamException {
 		 
 		 if (codiceFiscale.length() < 16) {
-			 System.out.println(MESS_CODICE_ERRATO);
 			 return false;
 		 }
 		 if (!verificaStringaLettere(0, 6)) {
-			 System.out.println(MESS_CODICE_ERRATO);
 			 return false;
 		 }
 		 if(!verificaStringaNumero(6) && !verificaStringaNumero(7) && !verificaLetteraMese()){
-			 System.out.println(MESS_CODICE_ERRATO);
 			 return false;
 		 }
 		 if (!verificaStringaNumero(9) && !verificaStringaNumero(10)) {
-			 System.out.println(MESS_CODICE_ERRATO);
 			 return false;
 		 }
 		 if (codiceFiscale.charAt(9) == codiceFiscale.charAt(10) && codiceFiscale.charAt(9) == '0') {
-			 System.out.println(MESS_CODICE_ERRATO);
-			 return false;
-		 }
-		 
-		 if (verificaComune()) {///da fare
-			 System.out.println(MESS_CODICE_ERRATO);
 			 return false;
 		 }
  
 		 if (!(codiceFiscale.charAt(15) == carattereControllo(codiceIncompleto))) {
-			 System.out.println(MESS_CODICE_ERRATO);
 			 return false;
 		 }
 		return true;
@@ -112,11 +101,6 @@ public class CodiceFiscale {
 		}
 		return false;
 	}
-
-	//verifica che il codice del comune sia giusto
-	private boolean verificaComune() {//da fare
-		return false;
-	}
 	 
 	//metodo che calcola il valore del carattere di controllo
 	private char carattereControllo(String codiceAttuale) throws XMLStreamException {
@@ -136,6 +120,7 @@ public class CodiceFiscale {
 		return lettere[resto];
 		
 	}
+
 
 //++++++++++++++++++++++++++fine metodi di supporto al metodo controllo++++++++++++++++++++++++++++++++++++++++++++++++
 	
